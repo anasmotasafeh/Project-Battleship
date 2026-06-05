@@ -36,3 +36,34 @@ test("receive attack", () => {
   expect(gameboard.receiveAttack(3, 4)).toBe("hit");
   expect(gameboard.board[3][3].ship.isSunk()).toBe(true);
 });
+
+test("track missed attacks", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShipAt(0, 0, 2, "colum");
+  expect(gameboard.missedAttacks).toBe(0);
+
+  expect(gameboard.receiveAttack(0, 0)).toBe("hit");
+  expect(gameboard.receiveAttack(0, 1)).toBe("missed");
+  expect(gameboard.missedAttacks).toBe(1);
+
+  expect(gameboard.receiveAttack(1, 1)).toBe("missed");
+  expect(gameboard.receiveAttack(2, 0)).toBe("missed");
+  expect(gameboard.missedAttacks).toBe(3);
+
+  expect(gameboard.receiveAttack(1, 0)).toBe("hit");
+  expect(gameboard.missedAttacks).toBe(3);
+});
+
+test("are all ships sunk", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShipAt(0, 0, 2, "colum");
+  gameboard.placeShipAt(0, 1, 2, "row");
+
+  gameboard.receiveAttack(0, 0);
+  gameboard.receiveAttack(1, 0);
+  expect(gameboard.allShipsSunk()).toBe(false);
+
+  gameboard.receiveAttack(0, 1);
+  gameboard.receiveAttack(0, 2);
+  expect(gameboard.allShipsSunk()).toBe(true);
+});

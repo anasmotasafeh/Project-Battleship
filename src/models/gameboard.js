@@ -1,4 +1,4 @@
-import { Ship } from "./ship";
+import { Ship } from "./ship.js";
 
 export class Gameboard {
   constructor() {
@@ -15,6 +15,7 @@ export class Gameboard {
       })),
     );
     this.ships = [];
+    this.missedAttacks = 0;
   }
 
   placeShipAt(x, y, length, direction) {
@@ -36,8 +37,20 @@ export class Gameboard {
     const ship = this.board[x][y].ship;
     if (ship !== null) {
       ship.hit();
+      this.board[x][y].attacked = true;
       return "hit";
     }
+    this.missedAttacks++;
+    this.board[x][y].attacked = true;
     return "missed";
+  }
+
+  allShipsSunk() {
+    for (const ship of this.ships) {
+      if (!ship.isSunk()) {
+        return false;
+      }
+    }
+    return true;
   }
 }

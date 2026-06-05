@@ -1,0 +1,30 @@
+.gameBoards{
+  border: solid red 3px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 100px);
+  grid-template-rows: repeat(10, 100px);
+  border: solid black 2px;
+}
+
+.cell {
+  border: black 1px solid;
+  width: 100px;
+  height: 100px;
+
+}
+
+.ship{
+  background-color: skyblue;
+}
+
+.attacked {
+  background-color: slategrey;
+}
+.hitted {
+  background-color: saddlebrown;
+}
